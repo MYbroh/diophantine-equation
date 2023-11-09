@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('input').on('input', function(){
+                $.ajax({
+                    url: '/update_result',
+                    type: 'POST',
+                    data: $('form').serialize(),
+                    success: function(response) {
+                        $('#resultContainer').html(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        function resetForm() {
+            document.getElementById('a').value = '';
+            document.getElementById('b').value = '';
+            document.getElementById('k').value = '';
+            document.getElementById('resultContainer').value = '';
+        }
+    </script>
+</head>
+<body>
+    <style>
+        #textarea {
+        height: 30px; 
+        width: 100px; 
+        box-sizing: border-box; 
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    
+        h1 {
+            color: #333;
+        }
+    
+        form {
+            margin-top: 20px;
+        }
+    
+        label, input {
+            font-size: 16px;
+        }
+    
+        input[type="number"] {
+            width: 50px;
+            text-align: center;
+        }
+    
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    
+        .result {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+        #playground {
+        margin-top: 50px;
+        }
+    
+        #playground h2 {
+        color: #333;
+        }
+
+        input[type="reset"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+        }
+        
+        input[type="reset"]:hover {
+        background-color: #c82333;
+        }
+
+
+
+    </style>
+    
+    
+    <h1>โปรแกรมคำนวณสมการไดโอแฟนไทล์เชิงเส้น ax+by=k</h1>
+    <h1>โดยให้ผลเฉลยเป็นพจน์ทั่วไป</h1>
+    
+    <form action="/result" method="post">
+        <label for="a">a:</label>
+        <input id="textarea" type="number" id="a" name="a" required><br><br>
+
+        <label for="b">b:</label>
+        <input id="textarea" type="number" id="b" name="b" required><br><br>
+
+        <label for="k">k:</label>
+        <input id="textarea" type="number" id="k" name="k" required><br><br>
+
+        <input type="reset" value="รีเซ็ต" onclick="resetForm()">
+
+        <div id="resultContainer" class="result">          
+            <!-- แสดงผลลัพธ์ของ x และ y ที่ได้ -->
+        </div>
+
+             
+
+    </form>
+
+    
+
+</body>
+</html>
